@@ -1,41 +1,46 @@
 const notes = require('express').Router();
-const fs = require('fs');
-const path = require('path');
+const { v4: uuidv4 } = require('uuid');
+const { readAndAppend, readFromFile, writeToFile } = require('../helpers/fsUtils');
 
-const filePath = path.join(__dirname, 'db', 'db.json');
 
-const readNotes = () => {
-  try {
-    const data = fs.readFileSync(filePath, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    return [];
-  }
-};
+notes.get('/', async (req, res) => {
+  readFromFile('./db/db.json').then((data) =>
+  res.json(JSON.parse(data))
+  );
+});
 
-notes.get('/api/notes', (req, res) => {
-  const currentNotes = readNotes();
-  res.json(currentNotes);
-})
+notes.post('/', (req, res) => {
+  console.log(req.body);
 
-notes.post('/api/notes', (req, res) => {
-  const {title, text} = req.body;
-  
-  if (req.body) {
-    const newNote = {
-      title,
-      text
-    }
-    readAndAppend(newNote, '/db/db.json');
-    res.json('Note added succesfully')
+  const { title, text } = req.body;
+
+  if(req.body) {
+  const newNote = {
+    title,
+    text,
+    id: uuidv4()
+  };
+    readAndAppend(newNote, './db/db.json');
+    res.json(`Note added`);
   } else {
-    res.error('Error in adding note')
+    res.error('Failed to add note')
   }
 });
 
-notes.delete('/api/notes/:id', (req, res) => {
-  
-});
+notes.delete('/:id', (req, res) => {
+  const noteId = req.params.note_id;
+  readFromFile('./db/db.json')
+    .then((data) => JSON.parse(data))
+    .then((json) => {
+      // Make a new array of all tips except the one with the ID provided in the URL
+      const result = json.filter((note) => note.note_id !== noteId);
 
+      // Save that array to the filesystem
+      writeToFile('./db/db.json', result);
+
+      // Respond to the DELETE request
+      res.json(`Item ${noteId} has been deleted 🗑️`);
+    });
+});
 
   module.exports = notes;
