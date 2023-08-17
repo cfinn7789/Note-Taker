@@ -3,6 +3,11 @@
   ## Description
   A server-side app that allows the user to write notes with a title and save and delete them.
 
+  ## Image of the live site
+
+  ![Note-taker](./Assets/11-express-homework-demo-01.png)
+  ![Note-taker](./Assets/11-express-homework-demo-02.png)
+
   ## Table of Contents
   - [Installation](#installation)
   - [Usage](#usage)
