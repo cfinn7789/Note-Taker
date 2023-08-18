@@ -5,7 +5,7 @@
 
   ## Image of the live site
 
-  ![Note-taker](./Assets/11-express-homework-demo-01.png)
+  ![Note-taker](./Assets/11-express-homework-demo-03.png)
   ![Note-taker](./Assets/11-express-homework-demo-02.png)
 
   ## Table of Contents
