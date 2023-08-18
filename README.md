@@ -33,4 +33,5 @@
 
   ## Contact Info
   [My Github](https://github.com/cfinn7789)
-  My Email: cfinn7789@gmail.com
+
+  [Note-Taker Site](https://note-taker-cfinn-aa9bbf3d4037.herokuapp.com/)
